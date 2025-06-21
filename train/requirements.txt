@@ -1,0 +1,6 @@
+chess==1.11.2
+python-chess==1.999
+torch==2.7.0
+flask==3.1.1
+flask-cors==6.0.0
+numpy==2.2.6
