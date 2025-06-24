@@ -1,39 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="lib/chessboardjs/css/chessboard-0.3.0.css">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Chess AI</title>
+  <link rel="stylesheet" href="lib/chessboardjs/css/chessboard-0.3.0.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<div id="board" class="board"></div>
-<div class="info">
-    Search depth:
-    <select id="search-depth">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3" selected>3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-    </select>
-
-    <br>
-    <span>Positions evaluated: <span id="position-count"></span></span>
-    <br>
-    <span>Time: <span id="time"></span></span>
-    <br>
-    <span>Positions/s: <span id="positions-per-s"></span> </span>
-    <br>
-    <br>
-    <div id="move-history" class="move-history">
+  <div class="wrapper">
+    <!-- Left: Chessboard -->
+    <div class="left">
+      <div id="board" class="board"></div>
     </div>
-</div>
-<script src="lib/jquery/jquery-3.2.1.min.js"></script>
-<script src="lib/chessboardjs/js/chess.js"></script>
-<script src="lib/chessboardjs/js/chessboard-0.3.0.js"></script>
-<script src="script.js"></script>
-<script>
 
-</script>
+    <!-- Right: Controls and Info -->
+    <div class="right">
+      <div class="algo-buttons">
+        <button id="btn-api" onclick="loadScript('api', this)">API</button>
+        <button id="btn-minimax" onclick="loadScript('minimax', this)">Minimax</button>
+        <button id="btn-heuristic" onclick="loadScript('heuristic', this)">Heuristic</button>
+      </div>
+
+      <div class="info">
+        <label><strong>Search depth:</strong></label><br />
+        <select id="search-depth">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3" selected>3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+
+        <div class="stats">
+          <strong>Positions evaluated:</strong> <span id="position-count"></span><br />
+          <strong>Time:</strong> <span id="time"></span><br />
+          <strong>Positions/s:</strong> <span id="positions-per-s"></span>
+        </div>
+
+        <div id="move-history" class="move-history"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="lib/jquery/jquery-3.2.1.min.js"></script>
+  <script src="lib/chessboardjs/js/chess.js"></script>
+  <script src="lib/chessboardjs/js/chessboard-0.3.0.js"></script>
+
+  <script>
+    let board, game;
+
+    function initBoard() {
+      game = new Chess();
+      board = ChessBoard('board', {
+        draggable: true,
+        position: 'start'
+      });
+    }
+
+    function loadScript(name, button) {
+      document.querySelectorAll('.algo-buttons button').forEach(btn => btn.classList.remove('active'));
+      if (button) button.classList.add('active');
+
+      const oldScript = document.getElementById('dynamic-script');
+      if (oldScript) oldScript.remove();
+
+      const script = document.createElement('script');
+      script.id = 'dynamic-script';
+      script.src = `${name}.js`;
+      script.onload = () => {
+        if (typeof onScriptLoaded === 'function') {
+          onScriptLoaded(game, board);
+        }
+      };
+      document.body.appendChild(script);
+    }
+
+    window.onload = function () {
+      initBoard();
+      const minimaxBtn = document.getElementById('btn-minimax');
+      loadScript('minimax', minimaxBtn);
+    };
+  </script>
 </body>
 </html>

@@ -12,3 +12,90 @@
     max-height: 100px;
     overflow-y: scroll;
 }
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 30px;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+}
+
+.wrapper {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    max-width: 1100px;
+    width: 100%;
+    gap: 30px;
+}
+
+.left {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.algo-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    justify-content: center;
+}
+
+.algo-buttons button {
+    flex: 1;
+    max-width: 120px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: #eaeaea;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.algo-buttons button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.info {
+    font-size: 14px;
+    width: 100%;
+}
+
+.info select {
+    margin-top: 5px;
+}
+
+.info .stats {
+    margin: 10px 0;
+}
+
+.move-history {
+    margin-top: 10px;
+    height: 150px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    background: #f8f8f8;
+    padding: 10px;
+    border-radius: 6px;
+    font-family: monospace;
+}
